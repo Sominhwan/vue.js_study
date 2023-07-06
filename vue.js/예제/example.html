@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue예제</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <div>더하기, 빼기 예제</div><br>
+    <div class="root">
+        <div>{{first}} {{operator}} {{second}} = </div>
+        <form v-on:submit="onSubmitForm">
+            <input type="number" ref="answer" v-model="value">
+            <button type="submit">입력!</button>
+        </form>
+        <div class="result">{{result}}</div>
+    </div>
+    
+    <script>
+        const app = new Vue({
+            el: ".root",
+            data: {
+                first: Math.ceil(Math.random() * 9),
+                operator: '+',
+                second: Math.ceil(Math.random() * 9),
+                value:'',
+                result:'',
+            },
+            methods: {
+                onSubmitForm(e){
+                    e.preventDefault();
+                    if(this.first + this.second === parseInt(this.value)){
+                        this.result = '올바른 값입니다.';
+                        this.first = Math.ceil(Math.random() * 9);
+                        this.second = Math.ceil(Math.random() * 9);
+                        this.value = '',
+                        this.$refs.answer.focus();
+                    } else{
+                        this.result = '틀린 결과입니다';
+                        this.value = '';
+                        this.$refs.answer.focus();
+                    }
+                }
+            },
+        })
+    </script>
+</body>
+</html>
